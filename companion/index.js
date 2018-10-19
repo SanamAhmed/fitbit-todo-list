@@ -16,7 +16,7 @@ import { outbox } from "file-transfer";
 import * as cbor from 'cbor';
 
 settingsStorage.onchange = function (evt) {
-    console.log("onchange: " + JSON.stringify(evt));
+    //console.log("onchange: " + JSON.stringify(evt));
     sendTodoItems();
 }
 

@@ -137,8 +137,6 @@ let checkedStateMap = {};
                   LIST RENDERING
  *************************************************/
 let populateList = function (listData) {
-    console.log("populating list");
-    console.log("colorscheme in populatelist = " + colorSchemeName);
     if (listData.length === 0) {
         emptyListHelp.style.display = "inline";
     } else {
@@ -179,6 +177,7 @@ let populateList = function (listData) {
                 let listNumber = tile.getElementById('listNumber');
 
                 listNumber.text = tile.index + 1;
+                listNumber.style.fill = colorSchemes[colorSchemeName].unchecked;
                 checkbox_1.value = checkedState[info.index];
                 titletext_1.style.fill = checkedState[info.index] === 0 ? colorSchemes[colorSchemeName].unchecked : colorSchemes[colorSchemeName].checked;
 
@@ -267,22 +266,16 @@ let lastProcessedSettingTime = 0;
 function loadSettings() {
     try {
         let settings = fs.readFileSync("todoItems.cbor", "cbor");
-        console.log("Last proc timestamp = " + lastProcessedSettingTime);
-        console.log("setting time = " + settings.timestamp);
-        console.log("todos = " + settings.todo);
-        console.log("colorscheme = " + settings.colorSchemeName);
         if (lastProcessedSettingTime < settings.timestamp) {
             lastProcessedSettingTime = settings.timestamp;
 
-            console.log("Setting new colorscheme");
             colorSchemeName = settings.colorSchemeName;
-            console.log("Condition = ", settings.todo !== undefined && settings.todo.length !== undefined)
             if (settings.todo !== undefined && settings.todo.length !== undefined) {
                 populateList(settings.todo);
             }
         }
     } catch (err) {
-        console.log("Err " + err);
+        //console.log("Err " + err);
     }
 }
 
